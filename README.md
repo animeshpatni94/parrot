@@ -164,7 +164,45 @@ Parrot activates automatically on session start (Claude Code plugin / Gemini ext
 |---------|--------|
 | `/parrot lite` | Kill restated questions + recap paragraphs |
 | `/parrot full` | Kill all self-repetition (default) |
-| `/parrot off` | Disable |
+| `/parrot off` | Disable for this session |
+
+## Turning it off
+
+**Per-session** — type `/parrot off` or `stop parrot` in the chat. Parrot goes silent until the session ends or you re-enable with `/parrot full`.
+
+**Permanently (Claude Code)**
+```bash
+claude plugin uninstall parrot      # remove the plugin entirely
+```
+
+**Permanently (standalone hooks)** — run the uninstall or remove manually:
+```bash
+# macOS / Linux — delete hook files and deregister from settings
+rm -f ~/.claude/hooks/parrot-*.js
+# Then remove the parrot entries from ~/.claude/settings.json under "hooks"
+
+# Windows (PowerShell)
+Remove-Item "$env:USERPROFILE\.claude\hooks\parrot-*.js"
+# Then remove the parrot entries from ~\.claude\settings.json under "hooks"
+```
+
+**Repo-level configs** — delete the config file for your tool:
+
+| Tool | File to delete |
+|------|---------------|
+| Copilot | `.github/copilot-instructions.md` |
+| Cursor | `.cursor/rules/parrot.md` |
+| Windsurf | `.windsurf/rules/parrot.md` |
+| Cline | `.clinerules/parrot.md` |
+| Roo Code | `.roo/rules/parrot.md` |
+| Continue | `.continuerules` and/or `.continue/rules/parrot.md` |
+| Zed | `.rules` |
+| Amazon Q | `.amazonq/rules/parrot.md` |
+| Augment | `.augment-guidelines` |
+| Aider | `.aider.conf.yml` |
+| Claude Code (project) | `CLAUDE.md` |
+| Codex | `AGENTS.md` |
+| Gemini CLI | `GEMINI.md` |
 
 ## What it cuts
 
@@ -196,23 +234,49 @@ claude plugin install parrot@parrot
 
 Caveman compresses *how* you say it. Parrot ensures you only say it *once*.
 
-## Evals
+## Measuring improvements
 
-Three-arm evaluation against 10 real-world prompts:
+### Quick: compare yourself
 
-| Arm | Description |
-|-----|-------------|
-| Baseline | No system prompt |
-| Control | "Do not repeat yourself." |
-| Parrot | Full SKILL.md |
+Ask the same question twice — once without parrot, once with it. Count the paragraphs that say something new vs. paragraphs that restate earlier content.
 
-Run locally:
+### Structured: run the eval harness
+
+Three-arm evaluation against 10 real-world prompts (debugging, architecture, security, DevOps):
+
+| Arm | What it tests |
+|-----|--------------|
+| **Baseline** | Vanilla LLM, no system prompt |
+| **Control** | System prompt: "Do not repeat yourself." |
+| **Parrot** | Full SKILL.md injected |
+
+The honest comparison is Parrot vs. Control — how much does the structured skill add beyond a naive "don't repeat" instruction?
+
+**Step 1: Generate responses** (requires `claude` CLI, authenticated)
 ```bash
-uv run python evals/llm_run.py          # requires claude CLI
-uv run --with tiktoken python evals/measure.py   # token counts + repetition ratio
+uv run python evals/llm_run.py
+```
+Produces `evals/snapshots/results.json` with raw outputs from all three arms.
+
+**Step 2: Measure** (no API key needed)
+```bash
+uv run --with tiktoken python evals/measure.py
 ```
 
-Metrics: token count, repetition ratio (unique semantic units / total sentences), information preservation.
+Reports per-arm:
+- **Token count** — raw output length (median, mean, min, max, stdev)
+- **Repetition ratio** — unique semantic units / total sentences. 1.0 = no repetition, 0.5 = half the sentences repeat earlier content
+- **Skill vs. control delta** — how much parrot reduces beyond the naive instruction
+
+### What to look for
+
+| Metric | Baseline (typical) | Parrot (expected) |
+|--------|-------------------|-------------------|
+| Tokens per response | 150-250 | 80-150 |
+| Repetition ratio | 0.60-0.75 | 0.90-1.00 |
+| Information lost | — | None (same answers, fewer words) |
+
+The token savings come entirely from cutting repeated content — no real information is removed.
 
 ## Feature matrix
 
