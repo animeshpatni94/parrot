@@ -51,7 +51,7 @@ Same information. Half the tokens.
 
 | Agent | Command | Auto-activates | Config file |
 |-------|---------|---------------|-------------|
-| **Claude Code** | `claude plugin install parrot@parrot` | Yes | `.claude-plugin/` |
+| **Claude Code** | [See below](#claude-code--setup-guide) | Yes | `.claude-plugin/` |
 | **Codex** | Clone repo | Yes | `AGENTS.md`, `.codex/` |
 | **Gemini CLI** | `gemini extensions install animeshpatni94/parrot` | Yes | `GEMINI.md` |
 | **Cursor** | `npx skills add animeshpatni94/parrot -a cursor` | No | `.cursor/rules/parrot.md` |
@@ -65,14 +65,20 @@ Same information. Half the tokens.
 | **Augment** | Clone repo | Yes | `.augment-guidelines` |
 | **Aider** | Clone repo | Yes | `.aider.conf.yml` → `rules/parrot.md` |
 
-<details>
+<details id="claude-code--setup-guide">
 <summary><b>Claude Code — setup guide</b></summary>
 
 **Option A: Plugin (recommended)**
 ```bash
+# Step 1: Add the marketplace (one-time)
+claude plugin marketplace add animeshpatni94/parrot
+
+# Step 2: Install the plugin
 claude plugin install parrot@parrot
 ```
 Auto-activates every session via `SessionStart` hook. Supports `/parrot lite`, `/parrot full`, `/parrot off`.
+
+Uninstall: `claude plugin uninstall parrot`
 
 **Option B: Standalone hooks (no plugin)**
 ```bash
