@@ -5,13 +5,6 @@
     "name": "Animesh Patni",
     "url": "https://github.com/animeshpatni94"
   },
-  "commands": [
-    {
-      "name": "parrot",
-      "description": "Switch parrot intensity level (lite/full/off)",
-      "source": "../commands/parrot.toml"
-    }
-  ],
   "hooks": {
     "SessionStart": [
       {
