@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "parrot",
+  "description": "Kills self-repetition in LLM responses. Cuts 30-40% wasted tokens by eliminating restated questions, echoed instructions, and repeated ideas.",
+  "owner": {
+    "name": "Animesh Patni",
+    "url": "https://github.com/animeshpatni94"
+  },
+  "plugins": [
+    {
+      "name": "parrot",
+      "description": "Said it once? Done. Cut 30-40% wasted tokens from repeated ideas.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

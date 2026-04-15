@@ -1,0 +1,34 @@
+{
+  "name": "parrot",
+  "description": "Kills self-repetition in LLM responses. Cuts 30-40% wasted tokens by eliminating restated questions, echoed instructions, and repeated ideas.",
+  "author": {
+    "name": "Animesh Patni",
+    "url": "https://github.com/animeshpatni94"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/parrot-activate.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading parrot mode..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/parrot-mode-tracker.js\"",
+            "timeout": 5,
+            "statusMessage": "Tracking parrot mode..."
+          }
+        ]
+      }
+    ]
+  }
+}

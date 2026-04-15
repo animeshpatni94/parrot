@@ -1,0 +1,1 @@
+@./skills/parrot/SKILL.md

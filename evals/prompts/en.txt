@@ -1,0 +1,10 @@
+Why is my React component re-rendering on every state update even though the props haven't changed?
+Explain how database connection pooling works and when I should use it.
+Review this code for bugs: function processQueue(items) { for (let i = 0; i < items.length; i++) { await processItem(items[i]); } }
+What's the difference between authentication and authorization? Give me a practical example.
+My Node.js API is returning 500 errors intermittently under load. How do I debug this?
+Explain the CAP theorem and which tradeoff most web applications choose.
+How do I set up CI/CD for a monorepo with three services that share a common library?
+What are the security implications of storing JWTs in localStorage vs httpOnly cookies?
+Debug this: my Docker container starts but the health check keeps failing after 30 seconds.
+Explain event-driven architecture and when it's better than request-response.

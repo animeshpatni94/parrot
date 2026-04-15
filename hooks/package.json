@@ -1,0 +1,6 @@
+{
+  "name": "parrot-hooks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hook scripts for parrot — kills self-repetition in LLM responses"
+}
