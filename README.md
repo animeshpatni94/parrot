@@ -66,14 +66,67 @@ Same information. Half the tokens.
 | **Aider** | Clone repo | Yes | `.aider.conf.yml` → `rules/parrot.md` |
 
 <details>
-<summary><b>Claude Code — standalone hooks (no plugin)</b></summary>
+<summary><b>Claude Code — setup guide</b></summary>
 
+**Option A: Plugin (recommended)**
+```bash
+claude plugin install parrot@parrot
+```
+Auto-activates every session via `SessionStart` hook. Supports `/parrot lite`, `/parrot full`, `/parrot off`.
+
+**Option B: Standalone hooks (no plugin)**
 ```bash
 # macOS / Linux
 bash <(curl -s https://raw.githubusercontent.com/animeshpatni94/parrot/main/hooks/install.sh)
 
 # Windows (PowerShell)
 irm https://raw.githubusercontent.com/animeshpatni94/parrot/main/hooks/install.ps1 | iex
+```
+Copies hook scripts to `~/.claude/hooks/` and registers them in `~/.claude/settings.json`.
+
+**Option C: Project-level only**
+
+Clone this repo into your project. Claude Code reads `CLAUDE.md` at the project root, which references `skills/parrot/SKILL.md`. Active for that project only.
+
+</details>
+
+<details>
+<summary><b>GitHub Copilot — setup guide</b></summary>
+
+**Option A: Repo-level (auto-activates for everyone on the project)**
+
+Add `.github/copilot-instructions.md` to your repo (already included if you clone parrot). Copilot Chat reads this file automatically — no config needed.
+
+To add parrot to an existing repo:
+```bash
+mkdir -p .github
+curl -fsSL https://raw.githubusercontent.com/animeshpatni94/parrot/main/.github/copilot-instructions.md \
+  -o .github/copilot-instructions.md
+```
+
+**Option B: User-level (active across all repos)**
+
+In VS Code: `Settings` → search `copilot instructions` → `GitHub > Copilot > Chat: Code Generation Instructions` → `Add Item` → paste:
+
+```
+Never say the same thing twice. One idea, one expression. No echoes.
+NEVER restate the user's question. NEVER echo instructions before executing.
+NEVER summarize what you just said. NEVER add a conclusion that repeats the intro.
+NEVER use: "as you mentioned", "to summarize", "in summary", "to recap".
+One idea, one expression. Said it? Move on.
+```
+
+**Option C: settings.json (VS Code)**
+
+Add to your VS Code `settings.json`:
+```json
+{
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "text": "Never say the same thing twice. NEVER restate the user's question. NEVER echo instructions before executing. NEVER summarize what you just said. NEVER add a conclusion that repeats the intro. One idea, one expression."
+    }
+  ]
+}
 ```
 
 </details>
