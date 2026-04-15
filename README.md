@@ -49,15 +49,21 @@ Same information. Half the tokens.
 
 ## Install
 
-| Agent | Command | Auto-activates |
-|-------|---------|---------------|
-| **Claude Code** | `claude plugin install parrot@parrot` | Yes |
-| **Codex** | Clone repo, use `AGENTS.md` | Yes (repo-local) |
-| **Gemini CLI** | `gemini extensions install animeshpatni94/parrot` | Yes |
-| **Cursor** | `npx skills add animeshpatni94/parrot -a cursor` | No |
-| **Windsurf** | `npx skills add animeshpatni94/parrot -a windsurf` | No |
-| **Cline** | `npx skills add animeshpatni94/parrot -a cline` | No |
-| **Copilot** | `npx skills add animeshpatni94/parrot -a github-copilot` | No |
+| Agent | Command | Auto-activates | Config file |
+|-------|---------|---------------|-------------|
+| **Claude Code** | `claude plugin install parrot@parrot` | Yes | `.claude-plugin/` |
+| **Codex** | Clone repo | Yes | `AGENTS.md`, `.codex/` |
+| **Gemini CLI** | `gemini extensions install animeshpatni94/parrot` | Yes | `GEMINI.md` |
+| **Cursor** | `npx skills add animeshpatni94/parrot -a cursor` | No | `.cursor/rules/parrot.md` |
+| **Windsurf** | `npx skills add animeshpatni94/parrot -a windsurf` | No | `.windsurf/rules/parrot.md` |
+| **Cline** | Clone repo | Yes | `.clinerules/parrot.md` |
+| **Roo Code** | Clone repo | Yes | `.roo/rules/parrot.md` |
+| **Copilot** | Clone repo | Yes | `.github/copilot-instructions.md` |
+| **Continue.dev** | Clone repo | Yes | `.continuerules` |
+| **Zed AI** | Clone repo | Yes | `.rules` |
+| **Amazon Q** | Clone repo | Yes | `.amazonq/rules/parrot.md` |
+| **Augment** | Clone repo | Yes | `.augment-guidelines` |
+| **Aider** | Clone repo | Yes | `.aider.conf.yml` → `rules/parrot.md` |
 
 <details>
 <summary><b>Claude Code — standalone hooks (no plugin)</b></summary>
@@ -73,9 +79,9 @@ irm https://raw.githubusercontent.com/animeshpatni94/parrot/main/hooks/install.p
 </details>
 
 <details>
-<summary><b>Cursor / Windsurf / Cline / Copilot — always-on snippet</b></summary>
+<summary><b>Cursor / Windsurf — always-on snippet</b></summary>
 
-The `npx skills add` command installs the skill but doesn't auto-activate. Paste this into your agent's rules file for always-on behavior:
+`npx skills add` installs the skill but doesn't auto-activate. Paste this into your agent's rules file:
 
 ```
 Never say the same thing twice. One idea, one expression. No echoes.
@@ -87,6 +93,13 @@ Never say the same thing twice. One idea, one expression. No echoes.
 6. NEVER repeat an explanation in different wording.
 7. One idea, one expression. Said it? Move on.
 ```
+
+</details>
+
+<details>
+<summary><b>Any other tool — manual setup</b></summary>
+
+Copy the contents of [`rules/parrot.md`](rules/parrot.md) into your tool's custom instructions or system prompt. Works with any LLM interface that accepts custom instructions.
 
 </details>
 
@@ -150,11 +163,11 @@ Metrics: token count, repetition ratio (unique semantic units / total sentences)
 
 ## Feature matrix
 
-| Feature | Claude Code | Codex | Gemini CLI | Cursor | Windsurf | Cline | Copilot |
-|---------|------------|-------|------------|--------|----------|-------|---------|
-| Auto-activation | Plugin | Repo | Extension | Manual | Manual | Manual | Manual |
-| `/parrot` commands | Yes | Yes | Yes | No | No | No | No |
-| Mode switching | Yes | Yes | Yes | No | No | No | No |
+| Feature | Claude Code | Codex | Gemini | Cursor | Windsurf | Cline | Roo Code | Copilot | Continue | Zed | Amazon Q | Augment | Aider |
+|---------|------------|-------|--------|--------|----------|-------|----------|---------|----------|-----|---------|---------|-------|
+| Auto-activation | Plugin | Repo | Ext | No | No | Repo | Repo | Repo | Repo | Repo | Repo | Repo | Repo |
+| `/parrot` commands | Yes | Yes | Yes | No | No | No | No | No | No | No | No | No | No |
+| Mode switching | Yes | Yes | Yes | No | No | No | No | No | No | No | No | No | No |
 
 ## License
 
