@@ -6,3 +6,4 @@ __pycache__/
 Thumbs.db
 evals/snapshots/results.json
 *.log
+.claude/settings.local.json
